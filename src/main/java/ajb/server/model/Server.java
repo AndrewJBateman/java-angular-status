@@ -4,11 +4,13 @@ import ajb.server.enumeration.Status;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import javax.validation.constraints.NotEmpty;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+
 import static javax.persistence.GenerationType.AUTO;
 
 @Entity
@@ -28,6 +30,4 @@ public class Server {
     private String imageUrl;
     private Status status;
 
-    public Server() {
-    }
 }
