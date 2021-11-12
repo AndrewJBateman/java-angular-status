@@ -63,6 +63,7 @@
 
 ## :clipboard: Status & To-Do List
 
+* Status: In work. Backend sends data to MySQL database. Frontend added.
 * Status: In work. Backend sends data to MySQL database
 * To-Do: Complete backend and frontend and test
 
