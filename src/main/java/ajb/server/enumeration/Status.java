@@ -9,7 +9,6 @@ public enum Status {
         this.status = status;
     }
 
-
     public String getStatus() {
         return this.status;
     }

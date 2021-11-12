@@ -3,7 +3,6 @@ package ajb.server.service;
 import ajb.server.model.Server;
 
 import java.io.IOException;
-import java.net.UnknownHostException;
 import java.util.Collection;
 
 public interface ServerService {

@@ -21,7 +21,7 @@ import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 
 @RestController
-@RequestMapping(value="/server")
+@RequestMapping(value = "/server")
 @RequiredArgsConstructor
 public class ServerResource {
     private final ServerServiceImpl serverService;
@@ -30,7 +30,7 @@ public class ServerResource {
 
     }
 
-    @GetMapping(value="/list")
+    @GetMapping(value = "/list")
     public ResponseEntity<Response> getServers() {
         return ResponseEntity.ok(
                 Response.builder()
@@ -43,7 +43,7 @@ public class ServerResource {
         );
     }
 
-    @GetMapping(value="/ping/{ipAddress}")
+    @GetMapping(value = "/ping/{ipAddress}")
     public ResponseEntity<Response> pingServer(@PathVariable("ipAddress") String ipÀddress) throws IOException {
         Server server = serverService.ping(ipÀddress);
         return ResponseEntity.ok(
@@ -57,8 +57,8 @@ public class ServerResource {
         );
     }
 
-    @PostMapping(value="/save")
-    public ResponseEntity<Response> saveServer(@RequestBody @Valid Server server){
+    @PostMapping(value = "/save")
+    public ResponseEntity<Response> saveServer(@RequestBody @Valid Server server) {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
@@ -70,7 +70,7 @@ public class ServerResource {
         );
     }
 
-    @GetMapping(value="/get/{id}")
+    @GetMapping(value = "/get/{id}")
     public ResponseEntity<Response> getServer(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -83,7 +83,7 @@ public class ServerResource {
         );
     }
 
-    @DeleteMapping(value="/delete/{id}")
+    @DeleteMapping(value = "/delete/{id}")
     public ResponseEntity<Response> deleteServer(@PathVariable("id") Long id) {
         return ResponseEntity.ok(
                 Response.builder()
@@ -96,8 +96,8 @@ public class ServerResource {
         );
     }
 
-    @GetMapping(path="/image/{fileName}", produces = IMAGE_PNG_VALUE)
+    @GetMapping(path = "/image/{fileName}", produces = IMAGE_PNG_VALUE)
     public byte[] getServerImage(@PathVariable("fileName") String fileName) throws IOException {
-        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "Downloads/images/" + fileName));
+        return Files.readAllBytes(Paths.get(System.getProperty("user.home") + "/Downloads/images/" + fileName));
     }
 }

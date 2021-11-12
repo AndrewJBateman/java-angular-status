@@ -37,7 +37,8 @@
 * [MySQL Structured Query Language Database v8](https://www.mysql.com/)
 
 **Frontend**
-* [Angular v13]() tba
+* [Angular v13](https://angular.io/) frontend framework
+* [rxjs v7](https://rxjs.dev/) reactive extensions library
 
 ## :camera: Screenshots
 
