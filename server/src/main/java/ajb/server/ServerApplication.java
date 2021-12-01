@@ -13,7 +13,7 @@ import org.springframework.web.filter.CorsFilter;
 
 import java.util.Arrays;
 
-import static ajb.server.enumeration.Status.*;
+import static ajb.server.enumeration.Status.SERVER_DOWN;
 import static ajb.server.enumeration.Status.SERVER_UP;
 
 @SpringBootApplication

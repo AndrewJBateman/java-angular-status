@@ -17,9 +17,10 @@ import java.net.UnknownHostException;
 import java.util.Collection;
 import java.util.Random;
 
-import static ajb.server.enumeration.Status.*;
+import static ajb.server.enumeration.Status.SERVER_DOWN;
+import static ajb.server.enumeration.Status.SERVER_UP;
 import static java.lang.Boolean.TRUE;
-import static org.springframework.data.domain.PageRequest.of;
+
 
 @RequiredArgsConstructor
 @Service
@@ -27,7 +28,6 @@ import static org.springframework.data.domain.PageRequest.of;
 @Slf4j
 public class ServerServiceImpl implements ServerService {
     private final ServerRepo serverRepo;
-
     @Override
     public Server create(Server server) {
         log.info("Saving new server: {}", server.getName());
@@ -48,7 +48,7 @@ public class ServerServiceImpl implements ServerService {
     @Override
     public Collection<Server> list(int limit) {
         log.info("Fetching all servers");
-        return serverRepo.findAll(of(0, limit)).toList();
+        return serverRepo.findAll(PageRequest.of(0, limit)).toList();
     }
 
     @Override

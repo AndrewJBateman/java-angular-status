@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static java.time.LocalDateTime.now;
 import static java.util.Map.*;
@@ -26,12 +27,9 @@ import static org.springframework.http.MediaType.IMAGE_PNG_VALUE;
 public class ServerResource {
     private final ServerServiceImpl serverService;
 
-    {
-
-    }
-
     @GetMapping(value = "/list")
-    public ResponseEntity<Response> getServers() {
+    public ResponseEntity<Response> getServers() throws InterruptedException {
+        TimeUnit.SECONDS.sleep(3);
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
@@ -44,12 +42,12 @@ public class ServerResource {
     }
 
     @GetMapping(value = "/ping/{ipAddress}")
-    public ResponseEntity<Response> pingServer(@PathVariable("ipAddress") String ipÀddress) throws IOException {
-        Server server = serverService.ping(ipÀddress);
+    public ResponseEntity<Response> pingServer(@PathVariable("ipAddress") String ipAddress) throws IOException {
+        Server server = serverService.ping(ipAddress);
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
-                        .data(of("server", server))
+                        .data(of("servers", server))
                         .message(server.getStatus() == Status.SERVER_UP ? "Ping successful" : "Ping failed")
                         .status(OK)
                         .statusCode(OK.value())
@@ -62,7 +60,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
-                        .data(of("server", serverService.create((server))))
+                        .data(of("servers", serverService.create((server))))
                         .message("Server created")
                         .status(CREATED)
                         .statusCode(CREATED.value())
@@ -75,7 +73,7 @@ public class ServerResource {
         return ResponseEntity.ok(
                 Response.builder()
                         .timeStamp(now())
-                        .data(of("server", serverService.get(id)))
+                        .data(of("servers", serverService.get(id)))
                         .message("Server retrieved")
                         .status(OK)
                         .statusCode(OK.value())
