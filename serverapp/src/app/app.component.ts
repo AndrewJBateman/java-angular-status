@@ -1,6 +1,6 @@
-import { catchError } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { DataState } from './enum/data-state.enum';
-import { map, Observable, of, startWith } from 'rxjs';
+import { BehaviorSubject, map, Observable, of, startWith } from 'rxjs';
 import { ServerService } from './service/server.service';
 import { Component, OnInit } from '@angular/core';
 import { AppState } from './interface/app-state';
@@ -14,15 +14,19 @@ import { CustomResponse } from './interface/custom-response';
 export class AppComponent implements OnInit {
   title = 'serverapp';
   appState$: Observable<AppState<CustomResponse>>;
+  private dataSubject = new BehaviorSubject<CustomResponse>(null);
+
   constructor(private serverService: ServerService) {}
 
   ngOnInit(): void {
     this.appState$ = this.serverService.servers$.pipe(
+      tap((response) => console.log('response', response)),
       map((response) => {
+        this.dataSubject.next(response);
         return { dataState: DataState.LOADED_STATE, appData: response };
       }),
       startWith({ dataState: DataState.LOADING_STATE }),
-      catchError(error: string) => {
+      catchError((error: string) => {
        return of({ dataState: DataState.ERROR_STATE, error: error})
       })
     );

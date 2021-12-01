@@ -11,6 +11,7 @@ import { Server } from '../interface/server';
 })
 export class ServerService {
   private readonly apiUrl = 'http://localhost:8080';
+
   constructor(private http: HttpClient) {}
 
   servers$ = <Observable<CustomResponse>>(
@@ -36,17 +37,18 @@ export class ServerService {
   filter$ = (status: Status, response: CustomResponse) =>
     <Observable<CustomResponse>>new Observable<CustomResponse>((subscriber) => {
       console.log(response);
+
       subscriber.next(
         status === Status.ALL
           ? { ...response, message: `Servers filtered by ${status} status` }
           : {
               ...response,
               message:
-                response.data.servers.filter(
-                  (server) => server.status === status
-                ).length > 0
-                  ? `Servers filtered by
-          ${status === Status.SERVER_UP ? 'SERVER UP' : 'SERVER DOWN'} status`
+                response.data.servers.filter((server) => {
+                  return server.status === status;
+                }).length > 0
+                  ? `Servers filtered by status
+          ${status === Status.SERVER_UP ? 'server up' : 'server down'}`
                   : `No servers of ${status} found`,
               data: {
                 servers: response.data.servers.filter(
@@ -67,6 +69,6 @@ export class ServerService {
 
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.log(error);
-    return throwError(`An error occured: Error code: ${error.status}`);
+    return throwError(() => console.log(`An error occured: Error code: ${error.status}`));
   }
 }
